@@ -1,34 +1,33 @@
 import 'react-native-gesture-handler';
-import { StyleSheet, SafeAreaView } from 'react-native'
+import { StyleSheet } from 'react-native'
 import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
-import FirstScreen from './components/FirstScreen';
-import SecondScreen from './components/SecondScreen';
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import { createStackNavigator } from '@react-navigation/stack';
+import LoginComponent from './components/LoginComponent';
+import HomeComponent from './components/HomeComponent';
+import { Provider } from 'react-redux';
+import { Store } from './redux/store';
 
-const Drawer = createDrawerNavigator();
+const Stack = createStackNavigator();
 
 const App = () => {
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <Provider store={Store}>
       <NavigationContainer>
-        <Drawer.Navigator
-          initialRouteName="First"
-          drawerPosition="left"
-          drawerType="front"
-          edgeWidth={100}
-          hideStatusBar={false}
-          ovelayColor="white"
-          drawerStyle={{
-            backgroundColor: '#fff',
-            width: 250,
+        <Stack.Navigator
+          initialRouteName="Login"
+          screenOptions={{
+            headerTitleAlign: 'center',
+            headerStyle: { backgroundColor: '#0080ff'},
+            headerTintColor: '#fff',
+            headerTitleStyle: { fontSize: 25, fontWeight: 'bold' },
           }}
         >
-          <Drawer.Screen name="First" component={FirstScreen} initialParams={{ name: 'This is Drawer', id: 95 }}/>
-          <Drawer.Screen name="Second" component={SecondScreen} />
-        </Drawer.Navigator>
+          <Stack.Screen name="Login" component={LoginComponent} options={{ headerShown: false }}/>
+          <Stack.Screen name="Home" component={HomeComponent} />
+        </Stack.Navigator>
       </NavigationContainer>
-    </SafeAreaView>
+    </Provider>
   )
 }
 
